@@ -21,7 +21,7 @@ var require$$2__default = /*#__PURE__*/_interopDefaultLegacy(require$$2);
 var require$$5__default = /*#__PURE__*/_interopDefaultLegacy(require$$5);
 
 var name = "iexjs";
-var version$1 = "0.3.1";
+var version$1 = "0.3.2";
 var description = "JS interface to IEX and IEX Cloud APIs";
 var repository = {
 	type: "git",
@@ -13705,15 +13705,15 @@ const batch = (symbols, {
 
   if (symbols.split(",").length > 100) {
     throw new IEXJSException("IEX will only handle up to 100 symbols at a time!");
-  }
+  } // let route;
+  // if (symbols.indexOf(",") < 0) {
+  //   route = `stock/${symbols}/batch?types=${fields.join(
+  //     ",",
+  //   )}&range=${range}&last=${last}`;
+  // } else {
 
-  let route;
 
-  if (symbols.indexOf(",") < 0) {
-    route = `stock/${symbols}/batch?types=${fields.join(",")}&range=${range}&last=${last}`;
-  } else {
-    route = `stock/market/batch?symbols=${symbols}&types=${fields.join(",")}&range=${range}&last=${last}`;
-  }
+  const route = `stock/market/batch?symbols=${symbols}&types=${fields.join(",")}&range=${range}&last=${last}`; // }
 
   return _get({
     url: route,

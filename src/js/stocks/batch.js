@@ -62,16 +62,16 @@ export const batch = (
     );
   }
 
-  let route;
-  if (symbols.indexOf(",") < 0) {
-    route = `stock/${symbols}/batch?types=${fields.join(
-      ",",
-    )}&range=${range}&last=${last}`;
-  } else {
-    route = `stock/market/batch?symbols=${symbols}&types=${fields.join(
-      ",",
-    )}&range=${range}&last=${last}`;
-  }
+  // let route;
+  // if (symbols.indexOf(",") < 0) {
+  //   route = `stock/${symbols}/batch?types=${fields.join(
+  //     ",",
+  //   )}&range=${range}&last=${last}`;
+  // } else {
+  const route = `stock/market/batch?symbols=${symbols}&types=${fields.join(
+    ",",
+  )}&range=${range}&last=${last}`;
+  // }
   return _get({
     url: route,
     token,
