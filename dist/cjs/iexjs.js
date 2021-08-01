@@ -47,7 +47,8 @@ var scripts = {
 	build: "npm-run-all -p build:*",
 	fix: "yarn lint --fix",
 	lint: "eslint src",
-	test: "set NODE_ENV=test IEX_TOKEN=Tpk_ecc89ddf30a611e9958142010a80043c && jest --config .jestrc.js --forceExit"
+	test: "set NODE_ENV=test&& set IEX_TOKEN=Tpk_ecc89ddf30a611e9958142010a80043c&& jest --config .jestrc.js --forceExit",
+	jest: "set NODE_ENV=test&& set IEX_TOKEN=Tpk_ecc89ddf30a611e9958142010a80043c&& jest --config .jestrc.js --forceExit -t batch"
 };
 var publishConfig = {
 	access: "public"
@@ -13667,6 +13668,7 @@ Client.prototype.daily = function (date, last, {
  * @param {string} options.fields List of fields to request
  * @param {string} options.range Date range for chart
  * @param {number} options.last last number of records
+ * @param {string} options.language filter news by language
  * @param {string} token Access token
  * @param {string} version API version
  * @param {string} filter https://iexcloud.io/docs/api/#filter-results
@@ -13676,7 +13678,8 @@ Client.prototype.daily = function (date, last, {
 const batch = (symbols, {
   fields,
   range,
-  last
+  last,
+  language
 } = {}, {
   token,
   version,
@@ -13713,7 +13716,7 @@ const batch = (symbols, {
   // } else {
 
 
-  const route = `stock/market/batch?symbols=${symbols}&types=${fields.join(",")}&range=${range}&last=${last}`; // }
+  const route = `stock/market/batch?symbols=${symbols}&types=${fields.join(",")}&range=${range}&last=${last}${language ? `&language=${language}` : ""}`; // }
 
   return _get({
     url: route,
@@ -13727,7 +13730,8 @@ const batch = (symbols, {
 Client.prototype.batch = function (symbols, {
   fields,
   range,
-  last
+  last,
+  language
 } = {}, {
   filter,
   format
@@ -13735,7 +13739,8 @@ Client.prototype.batch = function (symbols, {
   return batch(symbols, {
     fields,
     range,
-    last
+    last,
+    language
   }, {
     token: this._token,
     version: this._version,

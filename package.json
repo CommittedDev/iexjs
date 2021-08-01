@@ -26,7 +26,8 @@
     "build": "npm-run-all -p build:*",
     "fix": "yarn lint --fix",
     "lint": "eslint src",
-    "test": "set NODE_ENV=test IEX_TOKEN=Tpk_ecc89ddf30a611e9958142010a80043c && jest --config .jestrc.js --forceExit"
+    "test": "set NODE_ENV=test&& set IEX_TOKEN=Tpk_ecc89ddf30a611e9958142010a80043c&& jest --config .jestrc.js --forceExit",
+    "jest": "set NODE_ENV=test&& set IEX_TOKEN=Tpk_ecc89ddf30a611e9958142010a80043c&& jest --config .jestrc.js --forceExit -t batch"
   },
   "publishConfig": {
     "access": "public"

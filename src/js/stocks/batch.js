@@ -27,6 +27,7 @@ import { Client } from "../client";
  * @param {string} options.fields List of fields to request
  * @param {string} options.range Date range for chart
  * @param {number} options.last last number of records
+ * @param {string} options.language filter news by language
  * @param {string} token Access token
  * @param {string} version API version
  * @param {string} filter https://iexcloud.io/docs/api/#filter-results
@@ -34,7 +35,7 @@ import { Client } from "../client";
  */
 export const batch = (
   symbols,
-  { fields, range, last } = {},
+  { fields, range, last, language } = {},
   { token, version, filter, format } = {},
 ) => {
   fields = fields || "quote";
@@ -70,7 +71,7 @@ export const batch = (
   // } else {
   const route = `stock/market/batch?symbols=${symbols}&types=${fields.join(
     ",",
-  )}&range=${range}&last=${last}`;
+  )}&range=${range}&last=${last}${language ? `&language=${language}` : ""}`;
   // }
   return _get({
     url: route,
@@ -83,12 +84,12 @@ export const batch = (
 
 Client.prototype.batch = function (
   symbols,
-  { fields, range, last } = {},
+  { fields, range, last, language } = {},
   { filter, format } = {},
 ) {
   return batch(
     symbols,
-    { fields, range, last },
+    { fields, range, last, language },
     {
       token: this._token,
       version: this._version,

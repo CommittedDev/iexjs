@@ -26,11 +26,23 @@ afterEach(async () => {
 });
 
 describe("Stock", () => {
-  // test("batch", async () => {
-  //   const client = new Client({ version: "sandbox" });
-  //   const res = await client.batch();
-  //   expect(res).toBeDefined();
-  // });
+  test("batch", async () => {
+    const client = new Client({ version: "sandbox" });
+    const res = await client.batch([SYMBOL, "AAPL"]);
+    // console.log(res);
+    expect(res).toHaveProperty(SYMBOL);
+    expect(res).toHaveProperty("AAPL");
+    expect(res[SYMBOL]).toHaveProperty("quote");
+  });
+
+  test("batch - stock", async () => {
+    const client = new Client({ version: "sandbox" });
+    const res = await client.batch([SYMBOL], { fields: ["quote", "news"] });
+    // console.log(res);
+    expect(res).toHaveProperty(SYMBOL);
+    expect(res[SYMBOL]).toHaveProperty("quote");
+    expect(res[SYMBOL]).toHaveProperty("news");
+  });
 
   test("stockSplits", async () => {
     const client = new Client({ version: "sandbox" });
